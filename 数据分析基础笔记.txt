@@ -1,0 +1,172 @@
+Numpy(import numpy as np):
+  #设置numpy.ndarray的数据类型---np.type
+  np_lst = np.array(lst, dtype=np.type)
+  适用的数据类型有:bool, int 8/16/32/64/128, uint /16/32/64/128, float 16/32/64, complex 64/128
+
+  Numpy属性值:
+    .shape: ndarray的形状(几行几列)
+    .ndim: 维度
+    .dtype: 数据类型
+    .itemsize: 每个元素的大小
+    .size: 大小(元素的多少)
+
+  Numpy常用Array:
+    np.zeros([x,y])  初始化为x行y列的矩阵,每个元素都为0
+    np.ones([x,y])  初始化为x行y列的矩阵，每个元素都为1
+    np.random.rand(x,y)   生成x行y列的随机数矩阵
+    np.random.randint(x,y,z)   生成x-y之间的一个随机的整数,z为生成的数量
+    np.random.randn(x,y)  生成x行y列的随机正态分布数矩阵
+    np.random.choice([x,y,z])  生成x,y,z中的一个随机数
+    np.random.beta(x,y,z)   生成x到y之间的z个贝塔分布的随机数
+
+  Numpy常用操作
+    np.exp/exp2/sqrt/sin/log...(list)   获得对应的值
+    list.sum(axis=?)  列表求和,axis为对指定维度操作，axis越大,越深入
+    list.max(axis=?)  列表求最大值
+    list.min(axis=?)  列表求最小值
+    python中list类型的数组进行操作为追加操作,numpy中ndarray类型为求值操作
+    np.concatenate((list1, list2), axis=0)   numpy中ndarray类型进行追加操作
+    np.vstack((list1, list2))    纵向追加
+    np.hstack((list1, list2))    横向追加
+    np.split(list, x)  将数组分割成x份
+    np.copy(list)  对list进行拷贝
+
+  Numpy矩阵操作和线性方程组
+    np.eye(x)   生成x行x列的单位矩阵
+    inv(list)   生成list的逆矩阵
+    list.transpose   生成反置矩阵(矩阵自带)
+    det(list)   得到行列式
+    eig(list)   得到特征值与特征向量
+    slove(list1, list2)   解决线性方程组
+
+
+Matplotlib(import Matplotlib.pyplot as plt)
+  plt.figure()
+  plt.plot(x,y)
+  plt.show()      基本绘图方式
+
+  plt.title('')    添加标题
+  plt.plot(x,y,color='',linewidth=,linestyle='',lable='',alpha=)    指定线的颜色，宽度，类型，lable，透明度
+  plt.plot(x,y,'r*',lable='')    另一种指定线的颜色类型和lable的方法  r--红色 *--线为*型
+
+  ax = plt.gca()    ax为轴的编辑器
+  ax.spines['right/top/left/bottom']     为figure的四条边界线
+  ax.spines[''].set_color('')    设置边线颜色,可调为None即消除
+  ax.spines[''].set_position(('data'),0)     设置边线颜色，此参数为调到数据域的0位置
+  ax.xaxis.set_ticks_position('top/bottom')    将x轴的数据标点放到X轴的上面或下面
+  ax.yaxis.set_ticks_position('left/right')    将y轴的数据标点放到y轴的左边或右边
+
+  plt.xticks/yticks([],[])           第一个数组为要标示数据点的位置，第二个数组为要标示的内容
+  for lable in ax.get_xtickslables()+ax.getytickslables():    获取x.y轴的数据标点
+    lable.set_fontsize()        设置数据标点的大小
+    lable.set_bbox(dict(facecolor='',edgecolor='',alpha=))    设置数据标点所在小方块的背景颜色，边缘颜色，透明度
+
+  plt.legend(loc='upper left')   设置图例在左上角
+  plt.grid()     设置网格线
+  plt.axis([x1, x2, y1, y2])      指定显示范围
+  plt.fill_between(x,x<?,y,y>?,color='',alpha=)    填充符合x,y条件的范围
+  plt.annotate('text',xy=(x,y),xycords='data',xytext=(+10,+30),textcords='offset points',arrowprops=dict(arrowstyle='->',connectionstyle='arc3,rad=.2'))
+  #给图形加注释 内容   位置，并为其设置相当位置(textcords)偏移量(xytext)                      设置箭头类型
+
+
+  子图与多种图形绘制
+    散点图:
+      fig = plt.figure()    定义一个figure
+      fig.add_subplot(3,3,1)    将figure分为3行3列的表格，并选取第一个进行操作
+      X = np.random.normal(0,1,n)     生成0到1之间的n个随机数
+      Y = np.ramdom.normal(0,1,n)
+      T = np.arctan2(Y, X)     一种上色属性
+      plt.axes([x,y,z,t])   指定坐标系在figure中的显示范围 x-左轴到figure边界的占比,y-下轴到figure边界的占比,z-坐标系宽在figure中的占比,t-坐标系高在figure的占比
+      plt.scatter(X, Y, s=75, c=T, alpha=0.5)      绘制散点，s为点的大小,c为颜色
+      plt.xlim(-1.5,1.5)   坐标轴中X的范围
+      plt.ylim(-1.5,1.5)   坐标轴中y的范围
+      plt.xticks([]), plt.yticks([])   取消x,y轴上的数据标点
+
+    条状图:
+      fig.add_subplot(3,3,2)   选取表格中的第二个进行绘图
+      n = 10
+      X = np.arange(n)      定义0-9的等差数列
+      Y1 = (1 - X / float(n)) * np.random.uniform(0.5, 1.0, n)        Y1函数
+      Y2 = (1 - X / float(n)) * np.random.uniform(0.5, 1.0, n)        Y2函数
+      plt.bar(X, +Y1, facecolor='#ffff99', edgecolor='white')         绘制X, Y1条形图
+      plt.bar(X, -Y2, facecolor='#99ffff', edgecolor='white')         绘制X，Y2条形图
+      for x, y in zip(X, Y1):        zip函数是将X,Y1中的对应元素打包为一个元祖
+        plt.text(x + 0.4, y + 0.05, '%.2f' %y, ha='center', va='bottom')     绘制Y1数据标点，前俩个元素为绘制位置，第三个元素为内容
+      for x, y in zip(X, Y2):
+        plt.text(x + 0.4, -y - 0.05, '%.2f' %y, ha='center', va='top')     绘制Y2数据标点
+
+    饼图:
+      fig.add_subplot(333)
+      n = 20
+      z = np.ones(n)      绘制包含20个1的元祖
+      z[-1] *= 2       将最后一个元素变为1
+      plt.pie(Z, explode =Z * 0.5, colors=['%f' % (i / float(n)) for i in range(n)],     绘制饼图,explode为三角与圆心的距离
+              labels=['%.2f' % (i / float(n)) for i in range(n)])
+      plt.gca().set_aspect('equal')        让他成为一个圆形，而不是椭圆
+      plt.xticks([]), plt.yticks([])
+
+    plt.savefig('./')    保存
+
+
+Pandas(import pandas as pd):
+  pandas基本数据结构:
+    pd.Series(Data=, index=)    Data--数据部分  index--索引部分
+    pd.data_range('n',periods=n, freq='')    构建一个时间序列, periods为元素数量, freq为时间(天，小时，分钟，秒)
+    pd.DataFrame(Data=, index=, columns=)      Data--数据部分, index--索引部分， culomns--属性部分
+
+  pandas基本操作:
+    dates = []
+    df = pd.DataFrame(Data=, index=dates, columns)
+    df.head(n)     获得前n行
+    df.tail(n)     获得后n行
+    df.index       获得主键(索引)
+    df.values      获得数据部分
+    df.T         转置
+    df.sort(columns=''/index='')      根据columns或index进行升序排列
+    df.sort_index(axis=,ascending=)    axis为0时,对主键排序，为1时,对属性排序.ascending为bool类型参数,为真时,升序排列,为假时,为降序
+    df.describe()     获得所有属性值的数量,平均值,最小值,最小四分位,中位数,上四分位数,最大值
+
+    df['columns的值']     获得对应columns一列的值
+    df[:n]            获得前n行的值
+    df['index1':'index2']       获得index1到index2之间的值
+    df.loc[dates[0]]    根据下标获取对应数据(获得第一行数据)
+    df.loc['index1':'index2',['columns1','columns2']]   获取index1到index2行，且columns1和columns2列的数据
+    df.at[dates[n],'columns']   获取第n-1行，columns列的数值
+    df.iloc[n1:n2,m1:m2]     根据下标选择
+    df.iloc[n,m]       选择第n行m列数据
+    df.iat[n,m]        选择第n行m列数据
+
+    df[df.columns1>n][df.columns2<m]    选择columns1>n且columns2小于m的数据
+    df[df>0]      选择数据表中大于0的数据
+    df[df['columns'].isin([n,m])]      选取columns中是n或m的值
+
+    df['columns_new'] = pd.Series()     往数据中添加新元素,注意新的Series中的index要一致，且数量也要一致
+    df.at[dates[n],'columns'] = 0       将n-1行，columns列的数值改为0
+
+    df2 = df.copy()     复制数据表
+
+  缺失值处理:
+    df.dropna()      丢弃处理
+    df.fillna(value=)    补全处理
+
+  Pandas表统计与整合:
+    df.mean()    获得均值
+    df.var()    获得方差
+
+    s = pd.Series()
+    s.shirt(n)     将数据往后移n行
+    s.diff(n)    当前数据减去第前n个数
+    s.value_count()     获得每一个值在数据表中出现的次数
+    df.apply(fuc)     动态调用方法
+    pd.concat()      拼接数据表    #pieces = [df[:3],df.tail(1)]    df2 = pd.concat(pieces)
+    pd.merge(DataFrame1, DataFrame2, on='', how='inner/outer/DataFrame1/DataFrame2')          DataFrame之间的拼接, on为以什么为主键,how为以何种方式
+
+  Pandas绘图与文件操作(from pylab import *):
+    ts = pd.Series()
+    ts.plot()
+    show()
+
+    df = pd.read_csv('./')     读入CSV文件
+    df = pr.read_excel('./','sheet1')    读入excel文件
+    df.to_csv('./')     保存csv文件
+    df.to_exce;('./')    保存excel文件   
